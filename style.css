@@ -1,7 +1,8 @@
 :root { 
     --bg-color: #0a0a0a;
-    --accent-color: #ff4d88;
-    --text-color: #ffffff;
+    --accent-color: #ff3366;
+    --text-color: #fff;
+    --envelope-color: #ff5277;
 }
 
 /* ------------------ BODY ------------------ */
@@ -9,101 +10,159 @@
 body {
     margin: 0;
     height: 100vh;
-    background: radial-gradient(circle at center, #3a001f 0%, #14000a 60%, #000 100%);
-    font-family: 'Cormorant Garamond', serif;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-color);
-}
-
-/* ------------------ ESCENA PRINCIPAL ------------------ */
-
-.main-scene {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-}
-
-/* ------------------ TITULO ------------------ */
-
-.main-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.5rem;
-    color: var(--accent-color);
-    margin-top: 40px;
-    text-shadow: 0 0 30px rgba(255, 0, 90, 0.8);
-}
-
-/* ------------------ POEMA ------------------ */
-
-.poem {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    margin-top: 10px;
-    color: #f5dbe5;
-}
-
-/* ------------------ ARBOL / CORAZON ------------------ */
-
-.tree-wrapper {
-    position: relative;
-    width: 500px;
-    height: 500px;
-    margin: 40px auto 0 auto;
-}
-
-#treeCanvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    filter: drop-shadow(0 0 25px rgba(255, 0, 90, 0.6));
-}
-
-/* ------------------ MENSAJE FINAL ------------------ */
-
-.final-msg {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2.8rem;
-    color: var(--accent-color);
-    margin-top: 10px;
-    text-shadow: 0 0 20px rgba(255, 0, 90, 0.7);
-}
-
-/* ------------------ CONTADOR ------------------ */
-
-.timer {
-    margin-top: 8px;
-}
-
-#counter {
+    background: radial-gradient(circle at center, #2a0015 0%, #14000a 50%, #000 100%);
+    /* Fuente base moderna */
     font-family: 'Poppins', sans-serif;
-    font-size: 1.6rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px rgba(255, 0, 90, 0.6);
+    overflow: hidden;
 }
 
-/* ------------------ RESPONSIVE ------------------ */
+body::after {
+    content: ""; position: fixed; width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(255, 0, 90, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+}
 
-@media (max-width: 600px) {
+/* ------------------ FONDO ------------------ */
+.stars { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+.stars::after {
+    content: ""; position: absolute; width: 2px; height: 2px; background: white;
+    box-shadow: 50px 80px white, 120px 200px white, 300px 150px white, 500px 90px white, 
+                700px 300px white, 900px 120px white, 1100px 250px white, 1500px 180px white;
+    animation: twinkle 4s infinite alternate;
+}
+@keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }
 
-    .tree-wrapper {
-        width: 300px;
-        height: 300px;
-    }
+.particles span { position: absolute; width: 6px; height: 6px; background: rgba(255, 100, 150, 0.7); border-radius: 50%; animation: floatUp linear infinite; }
+@keyframes floatUp { from { transform: translateY(100vh); opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
 
-    .main-title {
-        font-size: 2.4rem;
-    }
+.petals span { position: absolute; width: 15px; height: 15px; background: linear-gradient(45deg, #ff3366, #ff6699); border-radius: 50% 50% 0 50%; transform: rotate(45deg); animation: fall linear infinite; }
+@keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-    .final-msg {
-        font-size: 2rem;
-    }
+/* ------------------ SOBRE ------------------ */
+.envelope-container { position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease, visibility 1s; z-index: 10; }
+.envelope-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    #counter {
-        font-size: 1.2rem;
-    }
+.envelope-wrapper { position: relative; width: 300px; height: 200px; cursor: pointer; }
+.envelope { position: relative; width: 300px; height: 200px; background: var(--envelope-color); }
+.envelope::before { content: ''; position: absolute; bottom: 0; left: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 100px solid #ff3366; z-index: 5; }
+.envelope .flap { position: absolute; top: 0; left: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 110px solid #ff1a4d; transform-origin: top; transition: transform 0.6s; z-index: 6; }
+.envelope .pocket { position: absolute; top: 0; left: 0; border-left: 150px solid #ff6685; border-top: 100px solid transparent; border-bottom: 100px solid transparent; z-index: 4; }
+.envelope .pocket::after { content: ''; position: absolute; top: -100px; left: -150px; border-right: 150px solid #ff6685; border-top: 100px solid transparent; border-bottom: 100px solid transparent; }
+.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+
+/* La carta dentro del sobre */
+.letter { 
+    position: absolute; top: 10px; left: 10px; width: 280px; height: 180px; background: #fff; border-radius: 10px; z-index: 3; display: flex; justify-content: center; align-items: center; color: #333; transition: transform 0.5s; 
+}
+/* Estilo elegante para el "Para ti" dentro del sobre */
+.letter-preview {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #d81b60;
+}
+.envelope-wrapper.open .letter { transform: translateY(-80px); z-index: 2; }
+
+/* ------------------ BOTÓN ------------------ */
+.heart-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 20; animation: pulseBtn 1.5s infinite; }
+@keyframes pulseBtn { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.1); } 100% { transform: translate(-50%, -50%) scale(1); } }
+.heart-btn .heart { width: 50px; height: 50px; background: red; position: relative; transform: rotate(45deg); box-shadow: 0 0 20px red; }
+.heart-btn .heart::before, .heart-btn .heart::after { content: ""; width: 50px; height: 50px; background: red; border-radius: 50%; position: absolute; }
+.heart-btn .heart::before { top: -25px; left: 0; } .heart-btn .heart::after { left: -25px; top: 0; }
+
+.heart-btn .text { 
+    color: white; margin-top: 60px; 
+    font-family: 'Poppins', sans-serif; font-weight: 600; 
+    text-shadow: 0 2px 4px black; white-space: nowrap; letter-spacing: 1px;
+}
+
+/* ------------------ ESCENA FINAL ------------------ */
+.main-scene { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 2s ease 1s; }
+.main-scene.visible { opacity: 1; visibility: visible; }
+.content-box { text-align: center; color: var(--text-color); width: 90%; max-width: 600px; z-index: 2; }
+
+/* Título Principal */
+.main-title { 
+    font-family: 'Playfair Display', serif; /* Fuente elegante */
+    font-size: 2.8rem; 
+    font-weight: 700;
+    color: var(--accent-color); 
+    margin: 0; 
+    text-shadow: 0 0 15px rgba(255, 51, 102, 0.7);
+    letter-spacing: 1px;
+}
+
+/* Poema - versión elegante mejorada */
+.poem {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; 
+    font-weight: 600;
+    margin: 20px 0; 
+    color: #f8e9f0; 
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(255, 51, 102, 0.2);
+}
+.poem br {
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Contador */
+.timer { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 0.85rem; 
+    margin-top: 10px; 
+    color: #aaa; 
+    letter-spacing: 1px; text-transform: uppercase;
+}
+#counter { 
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem; 
+    color: #fff; 
+    font-weight: 600; 
+    display: block; 
+    margin-top: 5px; 
+    text-shadow: 0 2px 10px rgba(255, 51, 102, 0.5);
+}
+
+/* ------------------ ÁRBOL ------------------ */
+.tree-wrapper { position: relative; width: 400px; height: 400px; margin: 0 auto; }
+#treeCanvas { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.5)); }
+
+/* ------------------ CORAZONES ------------------ */
+.hearts-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; animation: realisticBeat 1.4s infinite; }
+@keyframes realisticBeat { 0% { transform: scale(1); } 15% { transform: scale(1.05); } 30% { transform: scale(1); } 45% { transform: scale(1.02); } 100% { transform: scale(1); } }
+.heart-leaf { position: absolute; transform: rotate(-45deg) scale(0); opacity: 0; border-radius: 50% 50% 0 0; box-shadow: 0 0 8px rgba(255, 0, 90, 0.6); }
+.heart-leaf::before, .heart-leaf::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: 50%; }
+.heart-leaf::before { top: -50%; left: 0; } .heart-leaf::after { left: 50%; top: 0; }
+@keyframes bloom { to { transform: rotate(-45deg) scale(1); opacity: 1; } }
+
+/* Mensaje final */
+.final-msg { 
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--accent-color); 
+    font-size: 2.2rem; 
+    margin-top: 0px; 
+    animation: glow 2s infinite alternate; 
+}
+@keyframes glow { from { text-shadow: 0 0 5px var(--accent-color); } to { text-shadow: 0 0 25px var(--accent-color); } }
+
+/* ------------------ MÚSICA ------------------ */
+.music-controls { position: absolute; bottom: 20px; right: 20px; }
+.music-btn { 
+    background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s; 
+    font-family: 'Poppins', sans-serif; font-size: 0.9rem;
+}
+.music-btn:hover { background: rgba(255,255,255,0.2); }
+
+@media (max-width: 600px) { 
+    .tree-wrapper { width: 300px; height: 300px; } 
+    .main-title { font-size: 2rem; } 
+    .poem { font-size: 0.9rem; padding: 0 10px; } 
+    .final-msg { font-size: 1.8rem; } 
 }
