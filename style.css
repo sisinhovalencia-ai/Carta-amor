@@ -13,8 +13,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle at center, #2a0015 0%, #14000a 50%, #000 100%);
-    font-family: 'Cormorant Garamond', serif;
+    /* Degradado profundo estilo "Dark Romance" */
+    background: radial-gradient(circle at center, #4a0025 0%, #1a000d 60%, #000 100%);
+    font-family: 'Cormorant Garamond', serif; /* Fuente base elegante */
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -25,7 +26,8 @@ body::after {
     position: fixed;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255, 0, 90, 0.12) 0%, transparent 70%);
+    /* Capa de atmósfera rojiza sutil */
+    background: radial-gradient(circle, rgba(255, 51, 102, 0.08) 0%, transparent 80%);
     pointer-events: none;
 }
 
@@ -59,21 +61,21 @@ body::after {
 
 /* ------------------ SOBRE ------------------ */
 
-.envelope-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 1s ease, visibility 1s;
-    z-index: 10;
+.envelope-container { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: opacity 1s ease, visibility 1s; 
+    z-index: 10; 
 }
 
-.envelope-container.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+.envelope-container.hidden { 
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
 }
 
 .envelope-wrapper { 
@@ -92,21 +94,58 @@ body::after {
     box-shadow: 0 10px 40px rgba(255, 51, 102, 0.4);
 }
 
-/* Carta */
-
-.letter { 
+.envelope::before { 
+    content: ''; 
     position: absolute; 
-    top: 10px; 
-    left: 10px; 
-    width: 280px; 
-    height: 180px; 
-    background: #ffffff; 
-    border-radius: 14px; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    color: #333; 
-    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    bottom: 0; 
+    left: 0; 
+    border-left: 150px solid transparent; 
+    border-right: 150px solid transparent; 
+    border-bottom: 100px solid #ff3366; 
+    z-index: 5; 
+}
+
+.envelope .flap { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    border-left: 150px solid transparent; 
+    border-right: 150px solid transparent; 
+    border-top: 110px solid #ff1a4d; 
+    transform-origin: top; 
+    transition: transform 0.6s; 
+    z-index: 6; 
+}
+
+.envelope .pocket { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    border-left: 150px solid #ff6685; 
+    border-top: 100px solid transparent; 
+    border-bottom: 100px solid transparent; 
+    z-index: 4; 
+}
+
+.envelope .pocket::after { 
+    content: ''; 
+    position: absolute; 
+    top: -100px; 
+    left: -150px; 
+    border-right: 150px solid #ff6685; 
+    border-top: 100px solid transparent; 
+    border-bottom: 100px solid transparent; 
+}
+
+.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
+
+/* Carta interior */
+.letter { 
+    position: absolute; top: 10px; left: 10px; width: 280px; height: 180px; 
+    background: #ffffff; border-radius: 14px; 
+    display: flex; justify-content: center; align-items: center; 
+    color: #333; box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    transition: transform 0.5s;
 }
 
 .letter-preview {
@@ -116,161 +155,110 @@ body::after {
     color: #d81b60;
 }
 
+.envelope-wrapper.open .letter { transform: translateY(-80px); z-index: 2; }
+
+/* ------------------ BOTÓN ------------------ */
+.heart-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 20; animation: pulseBtn 1.5s infinite; }
+@keyframes pulseBtn { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.1); } 100% { transform: translate(-50%, -50%) scale(1); } }
+.heart-btn .heart { width: 50px; height: 50px; background: red; position: relative; transform: rotate(45deg); box-shadow: 0 0 20px red; }
+.heart-btn .heart::before, .heart-btn .heart::after { content: ""; width: 50px; height: 50px; background: red; border-radius: 50%; position: absolute; }
+.heart-btn .heart::before { top: -25px; left: 0; } .heart-btn .heart::after { left: -25px; top: 0; }
+.heart-btn .text { color: white; margin-top: 60px; font-family: 'Poppins', sans-serif; font-weight: 600; text-shadow: 0 2px 4px black; white-space: nowrap; }
+
 /* ------------------ ESCENA FINAL ------------------ */
 
-.main-scene {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 2s ease 0.8s;
+.main-scene { 
+    position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    opacity: 0; visibility: hidden; transition: opacity 2s ease 0.8s; 
 }
+.main-scene.visible { opacity: 1; visibility: visible; }
 
-.main-scene.visible {
-    opacity: 1;
-    visibility: visible;
-}
+.content-box { text-align: center; color: var(--text-color); width: 90%; max-width: 650px; z-index: 2; }
 
-.content-box {
-    text-align: center;
-    color: var(--text-color);
-    width: 90%;
-    max-width: 650px;
-    z-index: 2;
-}
-
-/* ------------------ TITULO ------------------ */
-
-.main-title {
-    font-family: 'Dancing Script', cursive;
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    letter-spacing: 1px;
+/* Título */
+.main-title { 
+    font-family: 'Dancing Script', cursive; 
+    font-size: 3.2rem; 
+    font-weight: 700; 
+    color: var(--accent-color); 
+    margin-bottom: 10px; 
+    letter-spacing: 1px; 
     text-shadow: 0 0 25px rgba(255, 51, 102, 0.7);
 }
 
-/* ------------------ POEMA ------------------ */
-
-.poem {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    margin: 20px 0;
-    color: #f8e9f0;
-    line-height: 1.9;
-    letter-spacing: 0.6px;
+/* Poema (Fuente elegante Cormorant) */
+.poem { 
+    font-family: 'Cormorant Garamond', serif; 
+    font-size: 1.3rem; 
+    margin: 15px 0; 
+    color: #f8e9f0; 
+    line-height: 1.4; 
+    letter-spacing: 0.6px; 
     text-shadow: 0 2px 10px rgba(255, 51, 102, 0.15);
+    min-height: 80px;
 }
 
-/* ------------------ MENSAJE FINAL ------------------ */
-
-.final-msg {
-    font-family: 'Dancing Script', cursive;
-    font-weight: 700;
-    color: var(--accent-color);
-    font-size: 2.6rem;
-    margin-top: 5px;
-    animation: glow 2s infinite alternate;
+/* Mensaje Final */
+.final-msg { 
+    font-family: 'Dancing Script', cursive; 
+    font-weight: 700; 
+    color: var(--accent-color); 
+    font-size: 2.6rem; 
+    margin-top: 5px; 
+    animation: glow 2s infinite alternate; 
 }
+@keyframes glow { from { text-shadow: 0 0 10px var(--accent-color); } to { text-shadow: 0 0 35px var(--accent-color); } }
 
-@keyframes glow {
-    from { text-shadow: 0 0 10px var(--accent-color); }
-    to { text-shadow: 0 0 35px var(--accent-color); }
-}
-
-/* ------------------ CONTADOR ------------------ */
-
-.timer {
-    margin-top: 12px;
-}
-
-#counter {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #ffffff;
-    text-shadow: 0 0 20px rgba(255, 51, 102, 0.7);
+/* Contador */
+.timer { margin-top: 12px; }
+#counter { 
+    font-family: 'Poppins', sans-serif; 
+    font-size: 1.6rem; 
+    font-weight: 700; 
+    letter-spacing: 2px; 
+    color: #ffffff; 
+    text-shadow: 0 0 20px rgba(255, 51, 102, 0.7); 
 }
 
 /* ------------------ ÁRBOL ------------------ */
+.tree-wrapper { position: relative; width: 400px; height: 400px; margin: 10px auto 0 auto; }
+#treeCanvas { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; filter: drop-shadow(0 10px 25px rgba(255, 0, 90, 0.4)); }
 
-.tree-wrapper {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    margin: 10px auto 0 auto;
+/* ------------------ CORAZONES ------------------ */
+.hearts-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; animation: realisticBeat 1.4s infinite; }
+@keyframes realisticBeat { 
+    0% { transform: scale(1); } 
+    15% { transform: scale(1.05); } 
+    30% { transform: scale(1); } 
+    45% { transform: scale(1.02); } 
+    60% { transform: scale(1); } 
+    100% { transform: scale(1); } 
 }
-
-#treeCanvas {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    filter: drop-shadow(0 10px 25px rgba(255, 0, 90, 0.4));
-}
+.heart-leaf { position: absolute; transform: rotate(-45deg) scale(0); opacity: 0; border-radius: 50% 50% 0 0; box-shadow: 0 0 10px rgba(255, 0, 90, 0.8); }
+.heart-leaf::before, .heart-leaf::after { content: ''; position: absolute; width: 100%; height: 100%; background: inherit; border-radius: 50%; }
+.heart-leaf::before { top: -50%; left: 0; } .heart-leaf::after { left: 50%; top: 0; }
+@keyframes bloom { to { transform: rotate(-45deg) scale(1); opacity: 1; } }
 
 /* ------------------ MÚSICA ------------------ */
-
-.music-controls {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+.music-controls { position: absolute; bottom: 20px; right: 20px; }
+.music-btn { 
+    background: rgba(255,255,255,0.08); color: white; border: 1px solid rgba(255,255,255,0.25); padding: 10px 18px; border-radius: 30px; cursor: pointer; 
+    font-family: 'Poppins', sans-serif; font-size: 0.9rem; backdrop-filter: blur(8px); transition: 0.3s; 
 }
+.music-btn:hover { background: rgba(255,255,255,0.18); transform: scale(1.05); }
 
-.music-btn {
-    background: rgba(255,255,255,0.08);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.25);
-    padding: 10px 18px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
-    backdrop-filter: blur(8px);
-    transition: 0.3s;
-}
-
-.music-btn:hover {
-    background: rgba(255,255,255,0.18);
-    transform: scale(1.05);
-}
+/* Partículas y Pétalos */
+.particles span { position: absolute; width: 6px; height: 6px; background: rgba(255, 100, 150, 0.7); border-radius: 50%; animation: floatUp linear infinite; }
+@keyframes floatUp { from { transform: translateY(100vh); opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
+.petals span { position: absolute; width: 15px; height: 15px; background: linear-gradient(45deg, #ff3366, #ff6699); border-radius: 50% 50% 0 50%; transform: rotate(45deg); animation: fall linear infinite; }
+@keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
 /* ------------------ RESPONSIVE ------------------ */
-
-@media (max-width: 600px) {
-
-    .tree-wrapper {
-        width: 260px;
-        height: 260px;
-    }
-
-    .main-title {
-        font-size: 2.4rem;
-    }
-
-    .poem {
-        font-size: 1.05rem;
-        padding: 0 15px;
-    }
-
-    .final-msg {
-        font-size: 2rem;
-    }
-
-    #counter {
-        font-size: 1.3rem;
-    }
-
-    .music-controls {
-        bottom: 15px;
-        right: 15px;
-    }
+@media (max-width: 600px) { 
+    .tree-wrapper { width: 260px; height: 260px; } 
+    .main-title { font-size: 2.4rem; } 
+    .poem { font-size: 1.05rem; padding: 0 15px; } 
+    .final-msg { font-size: 2rem; } 
+    #counter { font-size: 1.3rem; } 
+    .music-controls { bottom: 15px; right: 15px; } 
 }
