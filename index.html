@@ -1,59 +1,79 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Ti ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ❤️</title>
 
-<link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
 
-<div class="stars"></div>
+    <div class="stars"></div>
+    <div class="particles"></div>
+    <div class="petals"></div>
 
-<div class="envelope-container" id="envelope-screen">
-    <div class="envelope-wrapper">
-        <div class="envelope">
-            <div class="letter">
-                <p class="letter-preview">Para Ti ❤️</p>
+    <div class="envelope-container" id="envelope-screen">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="front flap"></div>
+                <div class="front pocket"></div>
+                <div class="letter">
+                    <p class="letter-preview">Para Ti ❤️</p>
+                </div>
+            </div>
+
+            <div class="heart-btn" onclick="openEnvelope()">
+                <div class="heart"></div>
+                <div class="text">Abrir Carta</div>
             </div>
         </div>
-
-        <div class="heart-btn" onclick="openEnvelope()">
-            <div class="heart"></div>
-            <div class="text">Abrir Carta</div>
-        </div>
     </div>
-</div>
 
-<div class="main-scene" id="main-scene">
+    <div class="main-scene" id="main-scene">
 
-    <div class="content-box">
+        <div class="content-box">
 
-        <h1 class="main-title">Para el amor de mi vida</h1>
+            <div class="text-section">
+                <h1 class="main-title">Para el amor de mi vida</h1>
+                <p class="poem">
+                    Si pudiera elegir un lugar seguro, sería a tu lado.<br>
+                    Cuanto más tiempo estoy contigo más te amo.<br>
+                    Eres mi casualidad más bonita y mi lugar favorito en el mundo.
+                </p>
+            </div>
 
-        <p class="poem">
-            Si pudiera elegir un lugar seguro, sería a tu lado.<br>
-            Cuanto más tiempo estoy contigo más te amo.<br>
-            Eres mi casualidad más bonita y mi lugar favorito en el mundo.
-        </p>
+            <div class="tree-wrapper">
+                <canvas id="treeCanvas" width="400" height="400"></canvas>
+                <div class="hearts-container" id="hearts-container"></div>
+            </div>
 
-        <div class="tree-wrapper">
-            <canvas id="treeCanvas"></canvas>
+            <div class="love-container">
+                <h2 class="final-msg">— I Love You! —</h2>
+
+                <div class="timer">
+                    <span id="counter">Calculando...</span>
+                </div>
+            </div>
+
         </div>
 
-        <h2 class="final-msg">— I Love You! —</h2>
+        <div class="music-controls">
+            <button onclick="toggleMusic()" class="music-btn">
+                <i class="fas fa-music"></i>
+                <span id="music-text">Música</span>
+            </button>
 
-        <div class="timer">
-            <span id="counter"></span>
+            <audio id="bg-music" loop preload="auto">
+                <source src="contigo.mp4" type="audio/mp4">
+            </audio>
         </div>
 
     </div>
-</div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
+
 </body>
 </html>
