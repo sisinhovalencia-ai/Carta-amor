@@ -1,179 +1,109 @@
 :root { 
     --bg-color: #0a0a0a;
-    --accent-color: #ff3366;
+    --accent-color: #ff4d88;
     --text-color: #ffffff;
-    --envelope-color: #ff5277;
 }
 
 /* ------------------ BODY ------------------ */
+
 body {
     margin: 0;
     height: 100vh;
+    background: radial-gradient(circle at center, #3a001f 0%, #14000a 60%, #000 100%);
+    font-family: 'Cormorant Garamond', serif;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Fondo oscuro profundo como la imagen */
-    background: radial-gradient(circle at center, #2a0015 0%, #100005 60%, #000 100%);
-    font-family: 'Cormorant Garamond', serif;
-    overflow: hidden;
+    color: var(--text-color);
 }
 
-/* Halo de luz sutil detrás */
-body::after {
-    content: "";
-    position: fixed;
-    width: 100%; height: 100%;
-    background: radial-gradient(circle, rgba(255, 51, 102, 0.1) 0%, transparent 70%);
-    pointer-events: none;
+/* ------------------ ESCENA PRINCIPAL ------------------ */
+
+.main-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
 }
 
-/* ------------------ ESTRELLAS Y FONDO ------------------ */
-.stars { position: fixed; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-.stars::after {
-    content: ""; position: absolute; width: 2px; height: 2px; background: white;
-    box-shadow: 50px 80px white, 120px 200px white, 300px 150px white, 500px 90px white, 
-                700px 300px white, 900px 120px white, 1100px 250px white, 1500px 180px white;
-    animation: twinkle 4s infinite alternate;
-}
-@keyframes twinkle { from { opacity: 0.3; } to { opacity: 1; } }
+/* ------------------ TITULO ------------------ */
 
-/* ------------------ SOBRE ------------------ */
-.envelope-container { position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease, visibility 1s; z-index: 10; }
-.envelope-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-
-.envelope-wrapper { position: relative; width: 300px; height: 200px; cursor: pointer; }
-.envelope { position: relative; width: 300px; height: 200px; background: linear-gradient(145deg, #ff5f82, #ff2e63); border-radius: 12px; box-shadow: 0 10px 40px rgba(255, 51, 102, 0.4); }
-.envelope::before { content: ''; position: absolute; bottom: 0; left: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 100px solid #ff3366; z-index: 5; }
-.envelope .flap { position: absolute; top: 0; left: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 110px solid #ff1a4d; transform-origin: top; transition: transform 0.6s; z-index: 6; }
-.envelope .pocket { position: absolute; top: 0; left: 0; border-left: 150px solid #ff6685; border-top: 100px solid transparent; border-bottom: 100px solid transparent; z-index: 4; }
-.envelope .pocket::after { content: ''; position: absolute; top: -100px; left: -150px; border-right: 150px solid #ff6685; border-top: 100px solid transparent; border-bottom: 100px solid transparent; }
-.envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
-
-.letter { position: absolute; top: 10px; left: 10px; width: 280px; height: 180px; background: #fff; border-radius: 14px; z-index: 3; display: flex; justify-content: center; align-items: center; color: #333; box-shadow: 0 8px 25px rgba(0,0,0,0.25); transition: transform 0.5s; }
-.letter-preview { font-family: 'Dancing Script', cursive; font-size: 2.2rem; font-weight: 700; color: #d81b60; }
-.envelope-wrapper.open .letter { transform: translateY(-80px); z-index: 2; }
-
-/* ------------------ BOTÓN ------------------ */
-.heart-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; z-index: 20; animation: pulseBtn 1.5s infinite; }
-@keyframes pulseBtn { 0% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.1); } 100% { transform: translate(-50%, -50%) scale(1); } }
-.heart-btn .heart { width: 50px; height: 50px; background: red; position: relative; transform: rotate(45deg); box-shadow: 0 0 20px red; }
-.heart-btn .heart::before, .heart-btn .heart::after { content: ""; width: 50px; height: 50px; background: red; border-radius: 50%; position: absolute; }
-.heart-btn .heart::before { top: -25px; left: 0; } .heart-btn .heart::after { left: -25px; top: 0; }
-.heart-btn .text { color: white; margin-top: 60px; font-family: 'Poppins', sans-serif; font-weight: 600; text-shadow: 0 2px 4px black; white-space: nowrap; }
-
-/* ------------------ ESCENA FINAL (Corrección de Layout) ------------------ */
-.main-scene { 
-    position: absolute; width: 100%; height: 100%; 
-    display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    opacity: 0; visibility: hidden; transition: opacity 2s ease 0.8s; 
-}
-.main-scene.visible { opacity: 1; visibility: visible; }
-
-.content-box { 
-    text-align: center; color: var(--text-color); 
-    width: 90%; max-width: 600px; 
-    z-index: 2; 
-    /* Aseguramos que el contenido no se aplaste */
-    display: flex; flex-direction: column; align-items: center;
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: var(--accent-color);
+    margin-top: 40px;
+    text-shadow: 0 0 30px rgba(255, 0, 90, 0.8);
 }
 
-/* Título */
-.main-title { 
-    font-family: 'Dancing Script', cursive; 
-    font-size: 3rem; font-weight: 700; 
-    color: var(--accent-color); 
-    margin: 0; 
-    text-shadow: 0 0 20px rgba(255, 51, 102, 0.8); /* Brillo neón */
+/* ------------------ POEMA ------------------ */
+
+.poem {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-top: 10px;
+    color: #f5dbe5;
 }
 
-/* Poema */
-.poem { 
-    font-family: 'Cormorant Garamond', serif; 
-    font-size: 1.2rem; margin: 10px 0; 
-    color: #f0f0f0; line-height: 1.4; 
-    min-height: 70px;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+/* ------------------ ARBOL / CORAZON ------------------ */
+
+.tree-wrapper {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 40px auto 0 auto;
 }
 
-/* ------------------ ÁRBOL Y CORAZONES (CRÍTICO) ------------------ */
-.tree-wrapper { 
-    position: relative; /* FUNDAMENTAL para que los corazones se ubiquen bien */
-    width: 400px; height: 400px; 
-    margin: 0 auto;
+#treeCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 0 25px rgba(255, 0, 90, 0.6));
 }
 
-#treeCanvas { 
-    position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; 
-    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); 
+/* ------------------ MENSAJE FINAL ------------------ */
+
+.final-msg {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: var(--accent-color);
+    margin-top: 10px;
+    text-shadow: 0 0 20px rgba(255, 0, 90, 0.7);
 }
 
-/* Contenedor de corazones */
-.hearts-container { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    pointer-events: none; 
-    animation: heartPulse 2s ease-in-out infinite; /* Latido suave */
+/* ------------------ CONTADOR ------------------ */
+
+.timer {
+    margin-top: 8px;
 }
 
-@keyframes heartPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.02); }
+#counter {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255, 0, 90, 0.6);
 }
 
-/* Hojas (Corazones individuales) */
-.heart-leaf { 
-    position: absolute; /* Esto evita la línea vertical */
-    transform: rotate(-45deg) scale(0); opacity: 0; 
-    border-radius: 50% 50% 0 0; 
-    /* Brillo intenso como en la imagen 2 */
-    box-shadow: 0 0 5px rgba(255, 50, 100, 0.8); 
-}
-.heart-leaf::before, .heart-leaf::after { 
-    content: ''; position: absolute; width: 100%; height: 100%; 
-    background: inherit; border-radius: 50%; 
-}
-.heart-leaf::before { top: -50%; left: 0; } 
-.heart-leaf::after { left: 50%; top: 0; }
+/* ------------------ RESPONSIVE ------------------ */
 
-@keyframes bloom { to { transform: rotate(-45deg) scale(1); opacity: 1; } }
+@media (max-width: 600px) {
 
-/* ------------------ TEXTOS FINALES ------------------ */
-.final-msg { 
-    font-family: 'Dancing Script', cursive; font-weight: 700; 
-    color: var(--accent-color); font-size: 2.2rem; 
-    margin-top: 0px; 
-    animation: glow 2s infinite alternate; 
+    .tree-wrapper {
+        width: 300px;
+        height: 300px;
+    }
+
+    .main-title {
+        font-size: 2.4rem;
+    }
+
+    .final-msg {
+        font-size: 2rem;
+    }
+
+    #counter {
+        font-size: 1.2rem;
+    }
 }
-@keyframes glow { from { text-shadow: 0 0 5px var(--accent-color); } to { text-shadow: 0 0 25px var(--accent-color); } }
-
-.timer { margin-top: 10px; }
-#counter { 
-    font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 600; 
-    letter-spacing: 1px; color: #fff; 
-    text-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-/* ------------------ MÚSICA ------------------ */
-.music-controls { position: absolute; bottom: 20px; right: 20px; }
-.music-btn { 
-    background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.3); 
-    padding: 8px 15px; border-radius: 20px; cursor: pointer; 
-    font-family: 'Poppins', sans-serif; font-size: 0.85rem; 
-    backdrop-filter: blur(5px); transition: 0.3s; 
-}
-.music-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
-
-/* ------------------ RESPONSIVE (Móvil) ------------------ */
-@media (max-width: 600px) { 
-    .tree-wrapper { width: 320px; height: 320px; margin-top: 10px; } /* Ajuste de tamaño para móvil */
-    .main-title { font-size: 2.2rem; } 
-    .poem { font-size: 1rem; padding: 0 10px; line-height: 1.3; } 
-    .final-msg { font-size: 1.8rem; } 
-    #counter { font-size: 1rem; }
-    .music-controls { bottom: 15px; right: 15px; }
-}
-
-/* Partículas del fondo */
-.particles span { position: absolute; width: 5px; height: 5px; background: rgba(255, 100, 150, 0.5); border-radius: 50%; animation: floatUp linear infinite; }
-@keyframes floatUp { from { transform: translateY(100vh); opacity: 1; } to { transform: translateY(-10vh); opacity: 0; } }
-.petals span { position: absolute; width: 12px; height: 12px; background: linear-gradient(45deg, #ff3366, #ff6699); border-radius: 50% 50% 0 50%; transform: rotate(45deg); animation: fall linear infinite; }
-@keyframes fall { from { transform: translateY(-10vh) rotate(0deg); opacity: 1; } to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
