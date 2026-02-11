@@ -3,23 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#14000a">
+
     <title>Para Ti ❤️</title>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- NUEVAS FUENTES ELEGANTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Dancing+Script:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
+    <!-- FONDO -->
     <div class="stars"></div>
     <div class="particles"></div>
     <div class="petals"></div>
 
+    <!-- ================= ENVELOPE SCREEN ================= -->
     <div class="envelope-container" id="envelope-screen">
         <div class="envelope-wrapper">
             <div class="envelope">
                 <div class="front flap"></div>
                 <div class="front pocket"></div>
+
                 <div class="letter">
                     <p class="letter-preview">Para Ti ❤️</p>
                 </div>
@@ -32,12 +42,15 @@
         </div>
     </div>
 
+    <!-- ================= ESCENA PRINCIPAL ================= -->
     <div class="main-scene" id="main-scene">
 
         <div class="content-box">
 
+            <!-- TEXTO -->
             <div class="text-section">
                 <h1 class="main-title">Para el amor de mi vida</h1>
+
                 <p class="poem">
                     Si pudiera elegir un lugar seguro, sería a tu lado.<br>
                     Cuanto más tiempo estoy contigo más te amo.<br>
@@ -45,11 +58,13 @@
                 </p>
             </div>
 
+            <!-- ÁRBOL -->
             <div class="tree-wrapper">
                 <canvas id="treeCanvas" width="400" height="400"></canvas>
                 <div class="hearts-container" id="hearts-container"></div>
             </div>
 
+            <!-- MENSAJE FINAL -->
             <div class="love-container">
                 <h2 class="final-msg">— I Love You! —</h2>
 
@@ -60,19 +75,21 @@
 
         </div>
 
+        <!-- CONTROLES DE MÚSICA -->
         <div class="music-controls">
             <button onclick="toggleMusic()" class="music-btn">
                 <i class="fas fa-music"></i>
-                <span id="music-text">Música</span>
+                <span id="music-text">Activar Música</span>
             </button>
 
-            <audio id="bg-music" loop preload="auto">
+            <audio id="bg-music" loop preload="auto" playsinline>
                 <source src="contigo.mp4" type="audio/mp4">
             </audio>
         </div>
 
     </div>
 
+    <!-- SCRIPT -->
     <script src="script.js"></script>
 
 </body>
